@@ -1,24 +1,24 @@
 FROM ubuntu:14.04
 
-RUN apt-get update && apt-get -y install curl
+RUN echo deb http://security.ubuntu.com/ubuntu trusty-security main restricted >> /etc/apt/sources.list
+RUN echo deb-src http://security.ubuntu.com/ubuntu trusty-security main restricted >> /etc/apt/sources.list
+RUN echo deb http://security.ubuntu.com/ubuntu trusty-security universe >> /etc/apt/sources.list
+RUN echo deb-src http://security.ubuntu.com/ubuntu trusty-security universe >> /etc/apt/sources.list
+RUN echo deb http://security.ubuntu.com/ubuntu trusty-security multiverse >> /etc/apt/sources.list
+RUN echo deb-src http://security.ubuntu.com/ubuntu trusty-security multiverse >> /etc/apt/sources.list
+
+RUN apt-get update && apt-get install -y -q wget unzip dpkg libnss3-1d curl
+RUN wget --no-check-certificate -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+ADD http://chromedriver.storage.googleapis.com/2.13/chromedriver_linux64.zip /srv/
+RUN unzip /srv/chromedriver_linux64.zip -d /srv
+RUN echo deb http://dl.google.com/linux/chrome/deb/ stable main >> /etc/apt/sources.list.d/google-chrome.list
 RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
-RUN apt-get update && \
-    apt-get -y install openjdk-7-jre \
-                       build-essential \
-                       chromium-browser \
-                       firefox \
-                       x11-xkb-utils \
-                       xfonts-100dpi \
-                       xfonts-75dpi \
-                       xfonts-scalable \
-                       xserver-xorg-core \
-                       dbus-x11 \
-                       xvfb \
-                       unzip \
-                       curl \
-                       xfonts-cyrillic \
-                       openssh-server \
-                       nodejs
+RUN apt-get update && apt-get install -q -y openjdk-7-jre-headless google-chrome-stable xvfb openssh-server x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic nodejs chromium-chromedriver
+
+RUN wget -N http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip && unzip chromedriver_linux64.zip
+RUN sudo mv -f chromedriver /usr/local/share/chromedriver
+RUN chmod +x /usr/local/share/chromedriver
+RUN sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver && sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
 
 RUN mkdir /var/run/sshd
 RUN echo 'root:hi' | chpasswd
@@ -28,12 +28,11 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN locale-gen en_US.UTF-8
 
 
-RUN npm install -g selenium-standalone && selenium-standalone install
-
 RUN mkdir -p /opt/selenium/
 RUN cd /opt/selenium/ && npm install selenium-webdriver
+ADD upstart.sh /opt/selenium/upstart
 ADD runner.js /opt/selenium/runner.js
-ADD upstart.sh /opt/selenium/upstart.sh
+RUN chmod +x /opt/selenium/upstart
 
 EXPOSE 22
-CMD ["sh", "/opt/selenium/upstart.sh"]
+CMD ["/opt/selenium/upstart"]

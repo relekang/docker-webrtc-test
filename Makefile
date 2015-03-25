@@ -15,11 +15,15 @@ build:
 run: .build
 	@echo "Starting docker container with tag $(TAG)"
 	@echo $(LINE)
-	@docker run -Pt webrtc-browser-test
+	@docker run --privileged=true -Pt webrtc-browser-test &
 
 stopall:
 	@echo "Stopping all containers"
 	@echo $(LINE)
 	@docker stop $(shell docker ps -a -q)
 
-.PHONY: build run stopall
+clean:
+	@rm -rf .build
+	@echo "Cleaned up"
+
+.PHONY: build run stopall clean
