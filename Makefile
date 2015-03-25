@@ -7,7 +7,10 @@ build:
 	@docker build -t $(TAG) .
 	@touch .build
 
-.build: build
+.build:
+	@make build
+	@echo $(LINE)
+
 
 run: .build
 	@echo "Starting docker container with tag $(TAG)"
