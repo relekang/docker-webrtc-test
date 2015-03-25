@@ -31,6 +31,7 @@ RUN locale-gen en_US.UTF-8
 RUN npm install -g selenium-standalone && selenium-standalone install
 
 RUN mkdir -p /opt/selenium/
+RUN cd /opt/selenium/ && npm install selenium-webdriver
 ADD runner.js /opt/selenium/runner.js
 ADD upstart.sh /opt/selenium/upstart.sh
 
