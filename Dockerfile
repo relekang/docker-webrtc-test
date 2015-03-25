@@ -28,6 +28,8 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN locale-gen en_US.UTF-8
 
 
+RUN npm install -g selenium-standalone && selenium-standalone install
+
 RUN mkdir -p /opt/selenium/
 ADD runner.js /opt/selenium/runner.js
 ADD upstart.sh /opt/selenium/upstart.sh
