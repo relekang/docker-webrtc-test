@@ -14,7 +14,7 @@ run: .build
 	@echo $(LINE)
 	@docker run -Pt webrtc-browser-test
 
-stopall: .build
+stopall:
 	@echo "Stopping all containers"
 	@echo $(LINE)
 	@docker stop $(shell docker ps -a -q)
