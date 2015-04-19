@@ -9,5 +9,8 @@ var driver = new webdriver.Builder()
 driver.get('http://aberforth.lkng.me/');
 
 // wait 10 minutes
-driver.wait(function() { }, 1000 * 60 * 10);
+try {
+  driver.wait(function() { }, 1000 * 60 * 10);
+} catch (e) {}
+
 driver.quit();
