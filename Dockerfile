@@ -20,19 +20,10 @@ RUN sudo mv -f chromedriver /usr/local/share/chromedriver
 RUN chmod +x /usr/local/share/chromedriver
 RUN sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver && sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
 
-RUN mkdir /var/run/sshd
-RUN echo 'root:hi' | chpasswd
-RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN echo "export VISIBLE=now" >> /etc/profile
-RUN locale-gen en_US.UTF-8
-
 
 RUN mkdir -p /opt/selenium/
-RUN cd /opt/selenium/ && npm install selenium-webdriver
+RUN cd /opt/selenium/ && npm install selenium-webdriver bluebird
 ADD upstart.sh /opt/selenium/upstart
 ADD runner.js /opt/selenium/runner.js
 RUN chmod +x /opt/selenium/upstart
-
-EXPOSE 22
-CMD ["/opt/selenium/upstart"]
+RUN ln -s /opt/selenium/upstart /usr/local/bin/start-test
