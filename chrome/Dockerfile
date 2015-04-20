@@ -23,7 +23,7 @@ RUN sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver && sudo
 
 RUN mkdir -p /opt/selenium/
 RUN cd /opt/selenium/ && npm install selenium-webdriver bluebird
-ADD upstart.sh /opt/selenium/upstart
+ADD ../upstart.sh /opt/selenium/upstart
 ADD runner.js /opt/selenium/runner.js
 RUN chmod +x /opt/selenium/upstart
 RUN ln -s /opt/selenium/upstart /usr/local/bin/start-test
