@@ -1,0 +1,4 @@
+tasks:
+  - npm install dockerlint
+  - dockerlint chrome/Dockerfile
+  - dockerlint firefox/Dockerfile
