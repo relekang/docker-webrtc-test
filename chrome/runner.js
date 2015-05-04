@@ -1,7 +1,6 @@
 var webdriver = require('selenium-webdriver');
 var By = require('selenium-webdriver').By;
 var until = require('selenium-webdriver').until;
-var Promise = require('bluebird');
 
 var driver = new webdriver.Builder()
   .forBrowser('chrome')
@@ -14,10 +13,8 @@ console.log('url: ' + url, 'time: ' + time);
 
 driver.get(url);
 driver.wait(function() {
-  return new Promise(function(resolve) {
-    setTimeout(function() {
-      resolve(true);
-    }, time);
-  });
+  return driver
+    .findElement(By.id('done'))
+    .isDisplayed();
 }, time);
 driver.quit();

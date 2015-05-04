@@ -1,7 +1,6 @@
 var webdriver = require('selenium-webdriver');
 var By = require('selenium-webdriver').By;
 var until = require('selenium-webdriver').until;
-var Promise = require('bluebird');
 
 var FirefoxProfile = require('firefox-profile');
 var profile = new FirefoxProfile();
@@ -25,12 +24,10 @@ profile.encoded(function(encodedProfile) {
 
   driver.get(url);
   driver.wait(function() {
-    return new Promise(function(resolve) {
-        setTimeout(function() {
-          resolve(true);
-        }, time);
-    });
-  }, time + 10);
+    return driver
+      .findElement(By.id('done'))
+      .isDisplayed();
+  }, time);
   driver.quit();
 
 });
