@@ -27,7 +27,7 @@ profile.encoded(function(encodedProfile) {
     return driver
       .findElement(By.id('done'))
       .isDisplayed();
-  }, time);
+  }, time * 1000);
   driver.quit();
 
 });
