@@ -4,8 +4,8 @@ browsers Firefox and Chrome. Both is automatically built on the Docker registry,
 images installs the latest stable version of the given browser and has a script called `start-test`, from
 which the browser is started with selenium.
 
-* [Chrome](https://registry.hub.docker.com/u/relekang/chrome-webrtc) [Dockerfile](chrome/Dockerfile)
-* [Firefox](https://registry.hub.docker.com/u/relekang/firefox-webrtc) [Dockerfile](firefox/Dockerfile)
+* [Chrome](https://registry.hub.docker.com/u/relekang/chrome-webrtc)  ([Dockerfile](chrome/Dockerfile))
+* [Firefox](https://registry.hub.docker.com/u/relekang/firefox-webrtc)  ([Dockerfile](firefox/Dockerfile))
 
 ## Usage
 Both Docker images takes two parameters: an url and a time-to-live. The browser will visit the web page for the
