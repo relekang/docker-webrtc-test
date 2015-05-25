@@ -1,5 +1,8 @@
 # docker-webrtc-test
-A headless browser docker setup for testing webrtc
+A headless browser Docker setup for testing webrtc. This repo contains two Dockerfiles one for each of the 
+browsers Firefox and Chrome. Both is automatically built on the Docker registry, see links below. Both 
+images installs the latest stable version of the given browser and has a script called `start-test`, from
+which the browser is started with selenium.
 
 ## Usage
 Both Docker images takes two parameters: an url and a time-to-live. The browser will visit the web page for the
